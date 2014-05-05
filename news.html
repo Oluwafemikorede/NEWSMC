@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+        
+    <title>Dashboard | SMC</title>
+    
+    <meta charset="utf-8" />
+            
+    <link rel="stylesheet" href="css/jquery.mobile-1.4.2.min.css">
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.css" rel="stylesheet">
+	<link href="//fonts.googleapis.com/css?family=Open+Sans:300,400,600,700&amp;lang=en" rel="" "stylesheet">
+    <!-- Custom styles for this template -->
+    
+    <link href="css/core.css" rel="stylesheet">
+    
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.mobile-1.4.2.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="js/html5shiv.js"></script>
+      <script src="js/respond.min.js"></script>
+    <![endif]-->
+    
+	<script id="panel-init">
+	  $(function() {
+		  $( "body>[data-role='panel']" ).panel();
+	  });
+		
+	  $(function() {
+			$("#tabs").tabs();
+	  });
+	  
+	  $(function() {
+		$( "#tabs" ).tabs();
+	  });
+	  
+	  $('#myTab a').click(function (e) {
+		  e.preventDefault()
+		  $(this).tab('show')
+		})
+	  
+	</script>
+</head>
+<body>
+
+
+
+
+<div data-role="page" class="jqm-demos" data-quicklinks="true">
+
+	<div data-role="header" data-ajax="false">
+		<a href="#leftpanel3" class="btn"><i class="fa fa-bars"></i> </a>
+    <h1 class="h1_header">SMC | News </h1>
+    <a href="#" data-rel="back" class="ui-btn ui-btn-right ui-alt-icon ui-nodisc-icon ui-corner-all ui-btn-icon-notext ui-icon-carat-l">
+        Back</a>
+	</div><!-- /header -->
+<!--  <img src="img/devices.png" class="col-xs-12" />    -->
+<ul data-role="listview" data-inset="true" id="lnews">
+    <li data-role="list-divider" class="h1_header" id="currentDate">Friday, March 8, 2014 </li>
+
+    </ul>
+  
+
+
+      <div data-role="footer"  data-tap-toggle="false" 
+      class="jqm-footer" data-position="fixed"
+      style="border-color: #FFF; color: #FFF;">
+         
+    <h4  class="h1_header" >&copy; Copyright 2014 SMC</h4>
+  </div>
+      
+</div><!-- /page -->
+
+	<!-- leftpanel3  -->
+	<div data-role="panel" id="leftpanel3" data-position="left" data-display="overlay" data-theme="a">
+
+        <h3 class="no-marg-top"><center><i class="fa fa-2x fa-user"></i></center></h3>
+        <center>
+          <h4 class="no-marg-top" id="username"></h4>
+        </center>
+        
+        
+  <div class="jqm-navmenu-panel jqm-panel-page-nav">
+    <ul class="jqm-list ui-alt-icon ui-nodisc-icon ui-listview">    
+  <li data-filtertext="demos homepage" data-icon="home" class="ui-first-child">
+    <a href="studentboard.html" class="ui-btn ui-btn-icon-right ui-icon-home">
+    Dashboard    </a>
+  </li>
+  <li data-filtertext="buttons button markup buttonmarkup method anchor link button element">
+      <a href="assignment.html" data-ajax="false" class="ui-btn ui-btn-icon-right ui-icon-carat-r">Assignment
+      </a>
+  </li> 
+   <li data-filtertext="form button widget input button submit reset">
+      <a href="news.html" data-ajax="false" class="ui-btn ui-btn-icon-right ui-icon-carat-r">
+      News
+      </a>
+   </li>
+
+   <li data-filtertext="form button widget input button submit reset">
+      <a href="javascript:;" id="cloud" data-ajax="false" class="ui-btn ui-btn-icon-right ui-icon-carat-r">
+      Sync to Cloud <i class="icon-upload"></i>
+      </a>
+   </li>
+</ul>
+          </div>        
+        
+        <p>Student Dashboard</p>
+        <a href="#demo-links" data-rel="close" class="ui-btn ui-shadow ui-corner-all ui-btn-a ui-icon-delete ui-btn-icon-left ui-btn-inline">Close Dashboard</a>
+
+  </div>
+ <script src="js/jquery.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.mobile-1.4.2.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function(){
+
+var dNow = new Date();
+var localdate= (dNow.getMonth()+1) + '/' + dNow.getDate() + '/' + dNow.getFullYear() + ' ' + dNow.getHours() + ':' + dNow.getMinutes();
+$('#currentDate').text(localdate);
+
+
+
+
+      var userDetails = localStorage.getItem("userData");
+     var user_Details = JSON.parse(userDetails);
+    
+    document.getElementById('username').innerHTML = user_Details.fname +'  '+ user_Details.lname;
+
+      var apiUrl = "http://386softs.com/smc/api/news/";
+      //var apiUrl = "http://localhost/smc/api/news/";
+ 
+     $.get( apiUrl+user_Details.class_id, function( data ) {
+        $.each(data, function( key, value ) {
+            console.log(value.title);
+            var body = "<li class='ui-li-static ui-body-inherit ui-last-child'><h2 style='text-transform:capitalize;'>"+ value.title +"</h2><p><strong>Author: Aderele Sesan</strong></p><p>"+ value.content +"</p></li>";
+           $( '#lnews' ).append( body );
+            });
+        }, "json");
+                 
+    });
+   
+
+</script>
+  </body>
+</html>
